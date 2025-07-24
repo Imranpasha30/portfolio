@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imran Linux Desktop - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Global Styles & Desktop --- */
+        :root {
+            --window-bg: rgba(30, 30, 30, 0.95);
+            --window-border: #555;
+            --title-bar-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --accent-color: #c056ff;
+            --terminal-text: #00ff41;
+            --panel-bg: rgba(20, 20, 20, 0.9);
+            --hover-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Ubuntu', 'Segoe UI', sans-serif;
+            color: var(--text-color);
+        }
+
+        #desktop {
+            width: 100%;
+            height: 100%;
+            background: url('https://wallpapers.com/images/file/Imran-linux-background-yi6o4o690jp8hf7e.jpg') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Top Panel (Taskbar) --- */
+        #top-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 35px;
+            background: var(--panel-bg);
+            border-bottom: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .panel-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 12px;
+        }
+
+        #applications-menu {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+
+        #applications-menu:hover {
+            background: var(--hover-bg);
+        }
+
+        .window-button {
+            background: var(--hover-bg);
+            border: none;
+            color: var(--text-color);
+            padding: 3px 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-right: 5px;
+            transition: background 0.2s;
+        }
+
+        .window-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .window-button.active {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        /* --- Desktop Icons --- */
+        .desktop-icon {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background 0.2s;
+            color: var(--text-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .desktop-icon i {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .desktop-icon span {
+            font-size: 11px;
+            word-wrap: break-word;
+        }
+
+        /* --- Context Menu --- */
+        #context-menu {
+            position: fixed;
+            background: var(--panel-bg);
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 5px 0;
+            z-index: 2000;
+            display: none;
+            min-width: 150px;
+            backdrop-filter: blur(10px);
+        }
+
+        .context-item {
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 13px;
+        }
+
+        .context-item:hover {
+            background: var(--hover-bg);
+        }
+
+        /* --- Application Menu --- */
+        #app-menu {
+            position: fixed;
+            bottom: 45px;
+            left: 10px;
+            width: 300px;
+            max-height: 400px;
+            background: var(--panel-bg);
+            border: 1px solid #555;
+            border-radius: 8px;
+            display: none;
+            z-index: 1002;
+            backdrop-filter: blur(10px);
+        }
+
+        .app-menu-section {
+            padding: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .app-menu-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: var(--accent-color);
+        }
+
+        .app-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.2s;
+            gap: 10px;
+        }
+
+        .app-item:hover {
+            background: var(--hover-bg);
+        }
+
+        .app-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* --- Bottom Dock (Centered) --- */
+        #dock {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+            background: var(--panel-bg);
+            border: 1px solid #444;
+            border-bottom: none;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .dock-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dock-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--hover-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .dock-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .dock-icon.active {
+            border-color: var(--accent-color);
+            background: rgba(192, 86, 255, 0.2);
+        }
+
+        .dock-icon.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .dock-icon i {
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        /* --- Window Styles --- */
+        .window {
+            position: absolute;
+            background: var(--window-bg);
+            border: 1px solid var(--window-border);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            min-width: 400px;
+            min-height: 250px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .title-bar {
+            background: var(--title-bar-bg);
+            color: var(--text-color);
+            padding: 8px 12px;
+            cursor: move;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-size: 13px;
+            border-bottom: 1px solid #444;
+        }
+
+        .title-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-bar-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            transition: opacity 0.2s;
+        }
+
+        .control-btn:hover {
+            opacity: 0.8;
+        }
+
+        .close-btn {
+            background-color: #ff5f56;
+        }
+
+        .minimize-btn {
+            background-color: #ffbd2e;
+        }
+
+        .maximize-btn {
+            background-color: #27c93f;
+        }
+
+        .window-content {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            background: rgba(40, 40, 40, 0.7);
+        }
+
+        /* --- Terminal Specific Styles --- */
+        #terminal-window .window-content {
+            background: rgba(0, 0, 0, 0.9);
+            font-family: 'Fira Code', 'Courier New', monospace;
+            color: var(--terminal-text);
+            padding: 10px;
+            line-height: 1.4;
+            font-size: 13px;
+        }
+
+        .terminal-line {
+            display: flex;
+            margin-bottom: 2px;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-color);
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        #terminal-input-line {
+            display: flex;
+            align-items: center;
+        }
+
+        #terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--terminal-text);
+            font-family: inherit;
+            font-size: inherit;
+            flex-grow: 1;
+            outline: none;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: var(--terminal-text);
+            width: 8px;
+            height: 1.2em;
+            animation: blink 1s step-end infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                background-color: transparent;
+            }
+
+            50% {
+                background-color: var(--terminal-text);
+            }
+        }
+
+        /* --- Enhanced Firefox Browser Styles --- */
+        .browser-toolbar {
+            background: #323234;
+            padding: 8px;
+            border-bottom: 1px solid #555;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .browser-nav-btn {
+            background: #404042;
+            border: 1px solid #5a5a5c;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.2s;
+        }
+
+        .browser-nav-btn:hover {
+            background: #4a4a4c;
+        }
+
+        .browser-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #url-input {
+            flex-grow: 1;
+            background: #404042;
+            border: 1px solid #5a5a5c;
+            border-radius: 20px;
+            color: #fff;
+            padding: 8px 15px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        #url-input:focus {
+            border-color: #0078d4;
+            box-shadow: 0 0 5px rgba(0, 120, 212, 0.3);
+        }
+
+        .browser-tabs {
+            background: #2b2b2d;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            border-bottom: 1px solid #555;
+        }
+
+        .browser-tab {
+            background: #404042;
+            border: 1px solid #5a5a5c;
+            border-bottom: none;
+            color: #fff;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            margin-right: 2px;
+            position: relative;
+            max-width: 200px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .browser-tab.active {
+            background: #323234;
+            border-color: #666;
+        }
+
+        .browser-tab .tab-close {
+            color: #999;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px;
+            border-radius: 2px;
+        }
+
+        .browser-tab .tab-close:hover {
+            background: #666;
+            color: #fff;
+        }
+
+        .add-tab-btn {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 16px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .add-tab-btn:hover {
+            background: #404042;
+            color: #fff;
+        }
+
+        .browser-bookmarks {
+            background: #2b2b2d;
+            padding: 4px 8px;
+            border-bottom: 1px solid #555;
+            display: flex;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .bookmark-item {
+            color: #ccc;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .bookmark-item:hover {
+            background: #404042;
+            color: #fff;
+        }
+
+        .loading-bar {
+            height: 2px;
+            background: #0078d4;
+            width: 0%;
+            transition: width 0.3s;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* --- File Manager Styles --- */
+        .file-manager-toolbar {
+            background: #333;
+            padding: 8px;
+            border-bottom: 1px solid #555;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .toolbar-btn {
+            background: #444;
+            border: 1px solid #555;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .toolbar-btn:hover {
+            background: #555;
+        }
+
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .file-item:hover {
+            background: var(--hover-bg);
+        }
+
+        .file-item i {
+            font-size: 32px;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+
+        .file-item span {
+            font-size: 11px;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        /* --- Clock --- */
+        #clock {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .window {
+                width: 95vw !important;
+                height: 80vh !important;
+                top: 10% !important;
+                left: 2.5% !important;
+            }
+
+            #dock {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 5px;
+                width: 90%;
+            }
+
+            .desktop-icon {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        /* --- Additional Styles --- */
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        .project-item {
+            margin-bottom: 15px;
+        }
+
+        .project-item h3 {
+            margin: 0 0 5px 0;
+            color: var(--text-color);
+        }
+
+        .project-item p {
+            margin: 0 0 5px 0;
+            color: #ccc;
+        }
+
+        .project-item a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .project-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="desktop">
+        <!-- Top Panel -->
+        <div id="top-panel">
+            <div class="panel-left">
+                <button id="applications-menu">
+                    <i class="fas fa-th"></i> Applications
+                </button>
+                <div id="window-list"></div>
+            </div>
+            <div class="panel-right">
+                <span id="clock"></span>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-volume-up"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" style="top: 60px; left: 20px;" data-window="terminal-window">
+            <i class="fas fa-terminal"></i>
+            <span>Terminal</span>
+        </div>
+        <div class="desktop-icon" style="top: 60px; left: 120px;" data-window="file-manager-window">
+            <i class="fas fa-folder"></i>
+            <span>Files</span>
+        </div>
+        <div class="desktop-icon" style="top: 160px; left: 20px;" data-window="browser-window">
+            <i class="fab fa-firefox"></i>
+            <span>Firefox</span>
+        </div>
+        <div class="desktop-icon" style="top: 160px; left: 120px;" data-window="about-window">
+            <i class="fas fa-user"></i>
+            <span>About</span>
+        </div>
+        <div class="desktop-icon" style="top: 260px; left: 20px;" data-window="projects-window">
+            <i class="fas fa-code"></i>
+            <span>Projects</span>
+        </div>
+
+        <!-- Applications Menu -->
+        <div id="app-menu">
+            <div class="app-menu-section">
+                <h3>Development</h3>
+                <div class="app-item" data-window="terminal-window">
+                    <i class="fas fa-terminal"></i>
+                    <span>Terminal</span>
+                </div>
+                <div class="app-item" data-window="projects-window">
+                    <i class="fas fa-code"></i>
+                    <span>Projects</span>
+                </div>
+            </div>
+            <div class="app-menu-section">
+                <h3>Internet</h3>
+                <div class="app-item" data-window="browser-window">
+                    <i class="fab fa-firefox"></i>
+                    <span>Firefox Browser</span>
+                </div>
+            </div>
+            <div class="app-menu-section">
+                <h3>System</h3>
+                <div class="app-item" data-window="file-manager-window">
+                    <i class="fas fa-folder"></i>
+                    <span>File Manager</span>
+                </div>
+                <div class="app-item" data-window="about-window">
+                    <i class="fas fa-user"></i>
+                    <span>About Me</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Context Menu -->
+        <div id="context-menu">
+            <div class="context-item" onclick="openTerminal()">
+                <i class="fas fa-terminal"></i> Open Terminal
+            </div>
+            <div class="context-item" onclick="refreshDesktop()">
+                <i class="fas fa-sync"></i> Refresh
+            </div>
+            <div class="context-item" onclick="showProperties()">
+                <i class="fas fa-cog"></i> Properties
+            </div>
+        </div>
+
+        <!-- Windows -->
+        <!-- Terminal Window -->
+        <div id="terminal-window" class="window" style="top: 100px; left: 200px; width: 700px; height: 400px;">
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <i class="fas fa-terminal"></i>
+                    <span>Imran@Pasha: ~</span>
+                </div>
+                <div class="title-bar-controls">
+                    <span class="control-btn minimize-btn" data-action="minimize" data-window="terminal-window">−</span>
+                    <span class="control-btn maximize-btn" data-action="maximize" data-window="terminal-window">□</span>
+                    <span class="control-btn close-btn" data-action="close" data-window="terminal-window">×</span>
+                </div>
+            </div>
+            <div class="window-content" id="terminal-content">
+                <div id="terminal-output"></div>
+                <div id="terminal-input-line">
+                    <span class="terminal-prompt">Imran@Pasha:~$</span>
+                    <input type="text" id="terminal-input" autocomplete="off" autofocus>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Manager Window -->
+        <div id="file-manager-window" class="window" style="top: 120px; left: 300px; width: 600px; height: 450px;">
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <i class="fas fa-folder"></i>
+                    <span>File Manager - /home/Imran</span>
+                </div>
+                <div class="title-bar-controls">
+                    <span class="control-btn minimize-btn" data-action="minimize"
+                        data-window="file-manager-window">−</span>
+                    <span class="control-btn maximize-btn" data-action="maximize"
+                        data-window="file-manager-window">□</span>
+                    <span class="control-btn close-btn" data-action="close" data-window="file-manager-window">×</span>
+                </div>
+            </div>
+            <div class="window-content" style="padding: 0;">
+                <div class="file-manager-toolbar">
+                    <button class="toolbar-btn"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="toolbar-btn"><i class="fas fa-arrow-right"></i> Forward</button>
+                    <button class="toolbar-btn"><i class="fas fa-home"></i> Home</button>
+                    <span style="margin-left: auto; color: #ccc;">/home/Imran</span>
+                </div>
+                <div class="file-list">
+                    <div class="file-item">
+                        <i class="fas fa-folder"></i>
+                        <span>Desktop</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-folder"></i>
+                        <span>Documents</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-folder"></i>
+                        <span>Downloads</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-folder"></i>
+                        <span>Pictures</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-file-code"></i>
+                        <span>script.py</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>notes.txt</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-file-archive"></i>
+                        <span>tools.zip</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-file-image"></i>
+                        <span>wallpaper.jpg</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Browser Window -->
+        <div id="browser-window" class="window" style="top: 80px; left: 250px; width: 900px; height: 600px;">
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <i class="fab fa-firefox"></i>
+                    <span id="browser-title">Mozilla Firefox</span>
+                </div>
+                <div class="title-bar-controls">
+                    <span class="control-btn minimize-btn" data-action="minimize" data-window="browser-window">−</span>
+                    <span class="control-btn maximize-btn" data-action="maximize" data-window="browser-window">□</span>
+                    <span class="control-btn close-btn" data-action="close" data-window="browser-window">×</span>
+                </div>
+            </div>
+            <div class="window-content" style="padding: 0; display: flex; flex-direction: column;">
+                <div class="loading-bar" id="loading-bar"></div>
+
+                <!-- Tab Bar -->
+                <div class="browser-tabs">
+                    <div class="browser-tab active" data-tab-id="1">
+                        <i class="fas fa-globe"></i>
+                        <span class="tab-title">New Tab</span>
+                        <span class="tab-close" onclick="closeTab(1)">×</span>
+                    </div>
+                    <button class="add-tab-btn" onclick="addNewTab()">+</button>
+                </div>
+
+                <!-- Bookmarks Bar -->
+                <div class="browser-bookmarks">
+                    <a href="#" class="bookmark-item" onclick="navigateToUrl('https://google.com')">
+                        <i class="fab fa-google"></i> Google
+                    </a>
+                    <a href="#" class="bookmark-item" onclick="navigateToUrl('https://github.com')">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="#" class="bookmark-item" onclick="navigateToUrl('https://stackoverflow.com')">
+                        <i class="fab fa-stack-overflow"></i> Stack Overflow
+                    </a>
+                    <a href="#" class="bookmark-item" onclick="navigateToUrl('https://developer.mozilla.org')">
+                        <i class="fab fa-firefox"></i> MDN
+                    </a>
+                </div>
+
+                <!-- Navigation Toolbar -->
+                <div class="browser-toolbar">
+                    <button class="browser-nav-btn" id="back-btn" onclick="goBack()" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="browser-nav-btn" id="forward-btn" onclick="goForward()" disabled>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="browser-nav-btn" onclick="refreshPage()">
+                        <i class="fas fa-sync"></i>
+                    </button>
+                    <input type="text" id="url-input" placeholder="Search or enter address" value="https://google.com">
+                    <button class="browser-nav-btn" onclick="navigateToUrlFromInput()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="browser-nav-btn" onclick="toggleBookmark()">
+                        <i class="fas fa-star"></i>
+                    </button>
+                    <button class="browser-nav-btn" onclick="openSettings()">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+
+                <!-- Browser Content -->
+                <div style="flex-grow: 1; position: relative;">
+                    <iframe id="browser-frame" src="https://google.com"
+                        style="width: 100%; height: 100%; border: none; background: #fff;"
+                        onload="onPageLoad()"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Window -->
+        <div id="about-window" class="window" style="top: 150px; left: 400px; width: 500px; height: 400px;">
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <i class="fas fa-user"></i>
+                    <span>About Me</span>
+                </div>
+                <div class="title-bar-controls">
+                    <span class="control-btn minimize-btn" data-action="minimize" data-window="about-window">−</span>
+                    <span class="control-btn maximize-btn" data-action="maximize" data-window="about-window">□</span>
+                    <span class="control-btn close-btn" data-action="close" data-window="about-window">×</span>
+                </div>
+            </div>
+            <div class="window-content">
+                <h2
+                    style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+                    <i class="fas fa-user-circle"></i> About Me
+                </h2>
+                <p>Hello! I'm a <strong>Cybersecurity Enthusiast</strong> and <strong>Penetration Tester</strong>.</p>
+                <p>I specialize in ethical hacking, vulnerability assessment, and security research using Imran Linux
+                    and various security tools.</p>
+
+                <h3 style="color: var(--accent-color);"><i class="fas fa-tools"></i> Skills & Tools</h3>
+                <ul>
+                    <li><strong>Languages:</strong> Python, Bash, JavaScript, C++</li>
+                    <li><strong>Security Tools:</strong> Nmap, Metasploit, Burp Suite, Wireshark</li>
+                    <li><strong>Frameworks:</strong> OWASP, NIST, ISO 27001</li>
+                    <li><strong>Specialties:</strong> Web App Testing, Network Security, OSINT</li>
+                </ul>
+
+                <h3 style="color: var(--accent-color);"><i class="fas fa-envelope"></i> Contact</h3>
+                <p>
+                    <i class="fas fa-envelope"></i> Email: security@example.com<br>
+                    <i class="fab fa-github"></i> GitHub: github.com/your-username<br>
+                    <i class="fab fa-linkedin"></i> LinkedIn: linkedin.com/in/your-profile
+                </p>
+            </div>
+        </div>
+
+        <!-- Projects Window -->
+        <div id="projects-window" class="window" style="top: 180px; left: 450px; width: 550px; height: 450px;">
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <i class="fas fa-code"></i>
+                    <span>Security Projects</span>
+                </div>
+                <div class="title-bar-controls">
+                    <span class="control-btn minimize-btn" data-action="minimize" data-window="projects-window">−</span>
+                    <span class="control-btn maximize-btn" data-action="maximize" data-window="projects-window">□</span>
+                    <span class="control-btn close-btn" data-action="close" data-window="projects-window">×</span>
+                </div>
+            </div>
+            <div class="window-content" id="projects-list">
+                <h2
+                    style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+                    <i class="fas fa-shield-alt"></i> Security Projects
+                </h2>
+
+                <div
+                    style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+                    <h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-bug"></i> Vulnerability Scanner</h3>
+                    <p style="margin: 0 0 8px 0; color: #ccc;">Automated web application vulnerability scanner built
+                        with Python. Detects common security flaws like XSS, SQL injection, and directory traversal.</p>
+                    <a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
+                        View on GitHub</a>
+                </div>
+
+                <div
+                    style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+                    <h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-network-wired"></i> Network Penetration
+                        Tool</h3>
+                    <p style="margin: 0 0 8px 0; color: #ccc;">Custom penetration testing framework for network security
+                        assessment. Includes port scanning, service enumeration, and exploit modules.</p>
+                    <a href="#" style="color: var(--accent-color); text-decoration: none;"><i
+                            class="fas fa-external-link-alt"></i> Live Demo</a> |
+                    <a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
+                        GitHub</a>
+                </div>
+
+                <div
+                    style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+                    <h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-desktop"></i> Imran Linux Portfolio OS
+                    </h3>
+                    <p style="margin: 0 0 8px 0; color: #ccc;">Interactive web-based portfolio that simulates a Imran
+                        Linux desktop environment. Built with HTML, CSS, and JavaScript.</p>
+                    <a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
+                        View Source</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Dock (Centered) -->
+        <div id="dock">
+            <div class="dock-section">
+                <div class="dock-icon" data-window="file-manager-window" title="File Manager">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div class="dock-icon" data-window="terminal-window" title="Terminal">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="dock-icon" data-window="browser-window" title="Firefox">
+                    <i class="fab fa-firefox"></i>
+                </div>
+                <div class="dock-icon" data-window="about-window" title="About Me">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="dock-icon" data-window="projects-window" title="Projects">
+                    <i class="fas fa-code"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configuration
+            const config = {
+                userName: "Imran",
+                hostname: "Imran",
+                currentPath: "~",
+                projects: [
+                    { name: 'Vulnerability Scanner', desc: 'Automated web application vulnerability scanner built with Python. Detects common security flaws like XSS, SQL injection, and directory traversal.', url: '#' },
+                    { name: 'Network Penetration Tool', desc: 'Custom penetration testing framework for network security assessment. Includes port scanning, service enumeration, and exploit modules.', url: '#' },
+                    { name: 'Imran Linux Portfolio OS', desc: 'Interactive web-based portfolio that simulates a Imran Linux desktop environment. Built with HTML, CSS, and JavaScript.', url: '#' }
+                ]
+            };
+
+            let windows = document.querySelectorAll('.window');
+            let activeWindow = null;
+            let highestZIndex = 100;
+
+            // Browser functionality
+            let browserHistory = [];
+            let currentHistoryIndex = -1;
+            let tabCounter = 1;
+            let currentTabId = 1;
+
+            // Clock functionality
+            function updateClock() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                const dateString = now.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                document.getElementById('clock').textContent = `${dateString} ${timeString}`;
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // Enhanced Browser Functions
+            window.navigateToUrl = function (url) {
+                const urlInput = document.getElementById('url-input');
+                const browserFrame = document.getElementById('browser-frame');
+                const loadingBar = document.getElementById('loading-bar');
+
+                // Show loading
+                loadingBar.style.width = '0%';
+                setTimeout(() => loadingBar.style.width = '100%', 100);
+
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    if (url.includes('.') && !url.includes(' ')) {
+                        url = 'https://' + url;
+                    } else {
+                        url = 'https://www.google.com/search?q=' + encodeURIComponent(url);
+                    }
+                }
+
+                urlInput.value = url;
+                browserFrame.src = url;
+
+                // Add to history
+                if (currentHistoryIndex < browserHistory.length - 1) {
+                    browserHistory = browserHistory.slice(0, currentHistoryIndex + 1);
+                }
+                browserHistory.push(url);
+                currentHistoryIndex = browserHistory.length - 1;
+
+                updateNavigationButtons();
+
+                // Update tab title
+                const activeTab = document.querySelector('.browser-tab.active .tab-title');
+                activeTab.textContent = 'Loading...';
+            };
+
+            window.navigateToUrlFromInput = function () {
+                const url = document.getElementById('url-input').value.trim();
+                if (url) {
+                    navigateToUrl(url);
+                }
+            };
+
+            window.goBack = function () {
+                if (currentHistoryIndex > 0) {
+                    currentHistoryIndex--;
+                    const url = browserHistory[currentHistoryIndex];
+                    document.getElementById('url-input').value = url;
+                    document.getElementById('browser-frame').src = url;
+                    updateNavigationButtons();
+                }
+            };
+
+            window.goForward = function () {
+                if (currentHistoryIndex < browserHistory.length - 1) {
+                    currentHistoryIndex++;
+                    const url = browserHistory[currentHistoryIndex];
+                    document.getElementById('url-input').value = url;
+                    document.getElementById('browser-frame').src = url;
+                    updateNavigationButtons();
+                }
+            };
+
+            window.refreshPage = function () {
+                const browserFrame = document.getElementById('browser-frame');
+                const loadingBar = document.getElementById('loading-bar');
+
+                loadingBar.style.width = '0%';
+                setTimeout(() => loadingBar.style.width = '100%', 100);
+
+                browserFrame.src = browserFrame.src;
+            };
+
+            window.addNewTab = function () {
+                tabCounter++;
+                const tabsContainer = document.querySelector('.browser-tabs');
+                const addButton = document.querySelector('.add-tab-btn');
+
+                const newTab = document.createElement('div');
+                newTab.className = 'browser-tab';
+                newTab.setAttribute('data-tab-id', tabCounter);
+                newTab.innerHTML = `
+                    <i class="fas fa-globe"></i>
+                    <span class="tab-title">New Tab</span>
+                    <span class="tab-close" onclick="closeTab(${tabCounter})">×</span>
+                `;
+
+                // Remove active from other tabs
+                document.querySelectorAll('.browser-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                newTab.classList.add('active');
+                tabsContainer.insertBefore(newTab, addButton);
+
+                currentTabId = tabCounter;
+                navigateToUrl('https://google.com');
+
+                // Add click event to new tab
+                newTab.addEventListener('click', function (e) {
+                    if (!e.target.classList.contains('tab-close')) {
+                        switchToTab(tabCounter);
+                    }
+                });
+            };
+
+            window.closeTab = function (tabId) {
+                const tab = document.querySelector(`[data-tab-id="${tabId}"]`);
+                const isActive = tab.classList.contains('active');
+
+                tab.remove();
+
+                if (isActive) {
+                    const remainingTabs = document.querySelectorAll('.browser-tab');
+                    if (remainingTabs.length > 0) {
+                        remainingTabs[0].classList.add('active');
+                        currentTabId = remainingTabs[0].getAttribute('data-tab-id');
+                    }
+                }
+            };
+
+            window.switchToTab = function (tabId) {
+                document.querySelectorAll('.browser-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                document.querySelector(`[data-tab-id="${tabId}"]`).classList.add('active');
+                currentTabId = tabId;
+            };
+
+            window.toggleBookmark = function () {
+                const bookmarkBtn = document.querySelector('.browser-nav-btn .fa-star');
+                bookmarkBtn.classList.toggle('fas');
+                bookmarkBtn.classList.toggle('far');
+            };
+
+            window.openSettings = function () {
+                alert('Firefox Settings - Feature coming soon!');
+            };
+
+            window.onPageLoad = function () {
+                const loadingBar = document.getElementById('loading-bar');
+                setTimeout(() => {
+                    loadingBar.style.width = '0%';
+
+                    // Update tab title
+                    const activeTab = document.querySelector('.browser-tab.active .tab-title');
+                    const currentUrl = document.getElementById('url-input').value;
+
+                    if (currentUrl.includes('google.com')) {
+                        activeTab.textContent = 'Google';
+                    } else if (currentUrl.includes('github.com')) {
+                        activeTab.textContent = 'GitHub';
+                    } else {
+                        activeTab.textContent = new URL(currentUrl).hostname;
+                    }
+                }, 1000);
+            };
+
+            function updateNavigationButtons() {
+                document.getElementById('back-btn').disabled = currentHistoryIndex <= 0;
+                document.getElementById('forward-btn').disabled = currentHistoryIndex >= browserHistory.length - 1;
+            }
+
+            // URL input event listeners
+            document.getElementById('url-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    navigateToUrlFromInput();
+                }
+            });
+
+            // Add click events to existing tabs
+            document.querySelectorAll('.browser-tab').forEach(tab => {
+                tab.addEventListener('click', function (e) {
+                    if (!e.target.classList.contains('tab-close')) {
+                        const tabId = this.getAttribute('data-tab-id');
+                        switchToTab(tabId);
+                    }
+                });
+            });
+
+            // Window management
+            function setupWindow(windowEl) {
+                makeDraggable(windowEl);
+                makeResizable(windowEl);
+
+                windowEl.addEventListener('mousedown', () => {
+                    bringToFront(windowEl);
+                });
+
+                // Window controls
+                const controls = windowEl.querySelectorAll('.control-btn');
+                controls.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const action = btn.dataset.action;
+                        const windowId = btn.dataset.window;
+
+                        switch (action) {
+                            case 'close':
+                                windowEl.style.display = 'none';
+                                updateWindowList();
+                                break;
+                            case 'minimize':
+                                windowEl.style.display = 'none';
+                                updateWindowList();
+                                break;
+                            case 'maximize':
+                                toggleMaximize(windowEl);
+                                break;
+                        }
+                    });
+                });
+            }
+
+            function bringToFront(windowEl) {
+                highestZIndex++;
+                windowEl.style.zIndex = highestZIndex;
+                activeWindow = windowEl;
+
+                // Update dock icons
+                document.querySelectorAll('.dock-icon').forEach(icon => {
+                    icon.classList.remove('active');
+                });
+
+                const windowId = windowEl.id;
+                const associatedIcon = document.querySelector(`[data-window="${windowId}"]`);
+                if (associatedIcon) {
+                    associatedIcon.classList.add('active');
+                }
+            }
+
+            function toggleMaximize(windowEl) {
+                if (windowEl.dataset.isMaximized === "true") {
+                    // Restore
+                    windowEl.style.width = windowEl.dataset.originalWidth;
+                    windowEl.style.height = windowEl.dataset.originalHeight;
+                    windowEl.style.top = windowEl.dataset.originalTop;
+                    windowEl.style.left = windowEl.dataset.originalLeft;
+                    windowEl.dataset.isMaximized = "false";
+                } else {
+                    // Maximize
+                    windowEl.dataset.originalWidth = windowEl.style.width || windowEl.offsetWidth + 'px';
+                    windowEl.dataset.originalHeight = windowEl.style.height || windowEl.offsetHeight + 'px';
+                    windowEl.dataset.originalTop = windowEl.style.top || windowEl.offsetTop + 'px';
+                    windowEl.dataset.originalLeft = windowEl.style.left || windowEl.offsetLeft + 'px';
+
+                    windowEl.style.width = '100vw';
+                    windowEl.style.height = 'calc(100vh - 80px)';
+                    windowEl.style.top = '35px';
+                    windowEl.style.left = '0';
+                    windowEl.dataset.isMaximized = "true";
+                }
+            }
+
+            function openWindow(windowId) {
+                const windowEl = document.getElementById(windowId);
+                if (windowEl) {
+                    windowEl.style.display = 'flex';
+                    bringToFront(windowEl);
+                    updateWindowList();
+                }
+            }
+
+            function updateWindowList() {
+                const windowList = document.getElementById('window-list');
+                windowList.innerHTML = '';
+
+                windows.forEach(win => {
+                    if (win.style.display === 'flex') {
+                        const btn = document.createElement('button');
+                        btn.className = 'window-button';
+                        btn.textContent = win.querySelector('.title-bar span').textContent;
+                        btn.addEventListener('click', () => {
+                            if (win.style.display === 'none') {
+                                win.style.display = 'flex';
+                            }
+                            bringToFront(win);
+                        });
+                        windowList.appendChild(btn);
+                    }
+                });
+            }
+
+            // Initialize all windows
+            windows.forEach(setupWindow);
+
+            // Dock functionality
+            document.querySelectorAll('.dock-icon, .desktop-icon, .app-item').forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const windowId = icon.dataset.window;
+                    if (windowId) {
+                        openWindow(windowId);
+                    }
+                });
+            });
+
+            // Applications menu
+            const appMenu = document.getElementById('app-menu');
+            const appsButton = document.getElementById('applications-menu');
+
+            appsButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                appMenu.style.display = appMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Context menu
+            const contextMenu = document.getElementById('context-menu');
+
+            document.addEventListener('contextmenu', (e) => {
+                if (e.target.id === 'desktop' || e.target.closest('#desktop') === document.getElementById('desktop')) {
+                    e.preventDefault();
+                    contextMenu.style.display = 'block';
+                    contextMenu.style.left = e.clientX + 'px';
+                    contextMenu.style.top = e.clientY + 'px';
+                }
+            });
+
+            document.addEventListener('click', () => {
+                contextMenu.style.display = 'none';
+                appMenu.style.display = 'none';
+            });
+
+            // Terminal functionality
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalOutput = document.getElementById('terminal-output');
+            const terminalContent = document.getElementById('terminal-content');
+
+            terminalContent.addEventListener('click', () => terminalInput.focus());
+
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const command = terminalInput.value.trim();
+                    const outputLine = document.createElement('div');
+                    outputLine.innerHTML = `<span class="terminal-prompt">${config.userName}@${config.hostname}:${config.currentPath}$</span> ${command}`;
+                    terminalOutput.appendChild(outputLine);
+
+                    executeCommand(command);
+                    terminalInput.value = '';
+                    terminalContent.scrollTop = terminalContent.scrollHeight;
+                }
+            });
+
+            function executeCommand(command) {
+                const output = document.createElement('div');
+                const args = command.split(' ');
+                const cmd = args[0].toLowerCase();
+
+                switch (cmd) {
+                    case 'help':
+                        output.innerHTML = `<span style="color: var(--accent-color);">Available commands:</span><br>
+                        <strong>help</strong> - Show this help message<br>
+                        <strong>whoami</strong> - Display current user<br>
+                        <strong>ls</strong> - List directory contents<br>
+                        <strong>pwd</strong> - Print working directory<br>
+                        <strong>cat [file]</strong> - Display file contents<br>
+                        <strong>projects</strong> - Show my projects<br>
+                        <strong>nmap [target]</strong> - Network scan simulation<br>
+                        <strong>nikto [url]</strong> - Web vulnerability scan<br>
+                        <strong>clear</strong> - Clear terminal<br>
+                        <strong>neofetch</strong> - System information<br>
+                        <strong>date</strong> - Show current date/time<br>
+                        <strong>uname -a</strong> - System information`;
+                        break;
+                    case 'whoami':
+                        output.textContent = config.userName;
+                        break;
+                    case 'pwd':
+                        output.textContent = `/home/${config.userName}`;
+                        break;
+                    case 'ls':
+                        output.innerHTML = `<span style="color: #4a9eff;">Desktop</span>&nbsp;&nbsp;<span style="color: #4a9eff;">Documents</span>&nbsp;&nbsp;<span style="color: #4a9eff;">Downloads</span>&nbsp;&nbsp;<span style="color: #4a9eff;">Pictures</span><br>
+                        <span style="color: var(--accent-color);">script.py</span>&nbsp;&nbsp;<span style="color: #fff;">notes.txt</span>&nbsp;&nbsp;<span style="color: #ff6b6b;">tools.zip</span>`;
+                        break;
+                    case 'projects':
+                        output.innerHTML = `<span style="color: var(--accent-color);">My Security Projects:</span><br>`;
+                        config.projects.forEach((project, index) => {
+                            output.innerHTML += `<br><strong style="color: var(--accent-color);">${index + 1}. ${project.name}</strong><br>`;
+                            output.innerHTML += `   ${project.desc}<br>`;
+                            output.innerHTML += `   <a href="${project.url}" style="color: var(--accent-color);">View Project</a><br>`;
+                        });
+                        break;
+                    case 'cat':
+                        if (args[1] === 'notes.txt') {
+                            output.innerHTML = `Security Research Notes<br>
+                            =====================<br>
+                            - Always validate input<br>
+                            - Use HTTPS everywhere<br>
+                            - Regular security audits<br>
+                            - Keep systems updated`;
+                        } else {
+                            output.innerHTML = `cat: ${args[1] || '[filename]'}: No such file or directory`;
+                        }
+                        break;
+                    case 'nmap':
+                        const target = args[1] || 'localhost';
+                        output.innerHTML = `<span style="color: var(--accent-color);">Starting Nmap scan against ${target}</span><br>
+                        PORT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STATE&nbsp;&nbsp;&nbsp;SERVICE<br>
+                        22/tcp&nbsp;&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;&nbsp;ssh<br>
+                        80/tcp&nbsp;&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;&nbsp;http<br>
+                        443/tcp&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;&nbsp;https<br>
+                        <span style="color: var(--accent-color);">Nmap done: 1 IP address scanned</span>`;
+                        break;
+                    case 'nikto':
+                        const url = args[1] || 'example.com';
+                        output.innerHTML = `<span style="color: var(--accent-color);">- Nikto v2.1.6</span><br>
+                        + Target IP: ${url}<br>
+                        + Server: Apache/2.4.41<br>
+                        + Retrieved x-powered-by header: PHP/7.4.3<br>
+                        + Cookie PHPSESSID created without the httponly flag<br>
+                        <span style="color: var(--accent-color);">+ 2 host(s) tested</span>`;
+                        break;
+                    case 'neofetch':
+                        output.innerHTML = `<pre style="color: var(--accent-color); margin: 0;">
+         ..............                 ${config.userName}@${config.hostname}
+      ...................               --------------
+    .......................             OS: Imran GNU/Linux Rolling
+  ...........................           Kernel: 5.15.0-Imran3-amd64
+ .............................          Uptime: 2 hours, 30 mins
+ ..............................         Shell: bash 5.1.4
+ ...............................        Terminal: gnome-terminal
+ ................................       CPU: Intel i7-10700K
+ .................................      Memory: 2048MiB / 16384MiB
+ ..................................     </pre>`;
+                        break;
+                    case 'clear':
+                        terminalOutput.innerHTML = '';
+                        return;
+                    case 'date':
+                        output.textContent = new Date().toString();
+                        break;
+                    case 'uname':
+                        if (args[1] === '-a') {
+                            output.textContent = 'Linux Imran 5.15.0-Imran3-amd64 #1 SMP Debian x86_64 GNU/Linux';
+                        } else {
+                            output.textContent = 'Linux';
+                        }
+                        break;
+                    case '':
+                        break;
+                    default:
+                        output.innerHTML = `<span style="color: #ff6b6b;">bash: ${command}: command not found</span><br>Type <strong>help</strong> for available commands.`;
+                        break;
+                }
+
+                if (cmd !== 'clear') {
+                    terminalOutput.appendChild(output);
+                }
+            }
+
+            // Utility functions
+            function makeDraggable(element) {
+                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                const titleBar = element.querySelector('.title-bar');
+
+                if (titleBar) {
+                    titleBar.onmousedown = dragMouseDown;
+                }
+
+                function dragMouseDown(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    document.onmouseup = closeDragElement;
+                    document.onmousemove = elementDrag;
+                }
+
+                function elementDrag(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    element.style.top = (element.offsetTop - pos2) + "px";
+                    element.style.left = (element.offsetLeft - pos1) + "px";
+                }
+
+                function closeDragElement() {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+            }
+
+            function makeResizable(element) {
+                const resizer = document.createElement('div');
+                resizer.style.width = '10px';
+                resizer.style.height = '10px';
+                resizer.style.background = 'transparent';
+                resizer.style.position = 'absolute';
+                resizer.style.right = '0';
+                resizer.style.bottom = '0';
+                resizer.style.cursor = 'nw-resize';
+                element.appendChild(resizer);
+
+                let isResizing = false;
+
+                resizer.addEventListener('mousedown', (e) => {
+                    isResizing = true;
+                    document.addEventListener('mousemove', resize);
+                    document.addEventListener('mouseup', stopResize);
+                });
+
+                function resize(e) {
+                    if (!isResizing) return;
+
+                    const rect = element.getBoundingClientRect();
+                    const newWidth = e.clientX - rect.left;
+                    const newHeight = e.clientY - rect.top;
+
+                    if (newWidth > 300) element.style.width = newWidth + 'px';
+                    if (newHeight > 200) element.style.height = newHeight + 'px';
+                }
+
+                function stopResize() {
+                    isResizing = false;
+                    document.removeEventListener('mousemove', resize);
+                    document.removeEventListener('mouseup', stopResize);
+                }
+            }
+
+            // Global functions for context menu
+            window.openTerminal = () => openWindow('terminal-window');
+            window.refreshDesktop = () => location.reload();
+            window.showProperties = () => alert('Desktop Properties - Imran Linux Desktop Environment');
+
+            // Initialize browser
+            navigateToUrl('https://google.com');
+
+            // Initial terminal welcome
+            executeCommand('neofetch');
+        });
+    </script>
+</body>
+
+</html>
