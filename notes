@@ -1,0 +1,42 @@
+<div class="window" id="projects-window" style="top: 180px; left: 450px; width: 550px; height: 450px;">
+<div class="title-bar">
+<div class="title-bar-left">
+<i class="fas fa-code"></i>
+<span>Web Projects</span>
+</div>
+<div class="title-bar-controls">
+<span class="control-btn minimize-btn" data-action="minimize" data-window="projects-window">−</span>
+<span class="control-btn maximize-btn" data-action="maximize" data-window="projects-window">□</span>
+<span class="control-btn close-btn" data-action="close" data-window="projects-window">×</span>
+</div>
+</div>
+<div class="window-content" id="projects-list">
+<h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+<i class="fas fa-shield-alt"></i> Security Projects
+                </h2>
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+<h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-bug"></i> Vulnerability Scanner</h3>
+<p style="margin: 0 0 8px 0; color: #ccc;">Automated web application vulnerability scanner built
+                        with Python. Detects common security flaws like XSS, SQL injection, and directory traversal.</p>
+<a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
+                        View on GitHub</a>
+</div>
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+<h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-network-wired"></i> Network Penetration
+                        Tool</h3>
+<p style="margin: 0 0 8px 0; color: #ccc;">Custom penetration testing framework for network security
+                        assessment. Includes port scanning, service enumeration, and exploit modules.</p>
+<a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fas fa-external-link-alt"></i> Live Demo</a> |
+                    <a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
+                        GitHub</a>
+</div>
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+<h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-desktop"></i> Imran Linux Portfolio OS
+                    </h3>
+<p style="margin: 0 0 8px 0; color: #ccc;">Interactive web-based portfolio that simulates a Imran
+                        Linux desktop environment. Built with HTML, CSS, and JavaScript.</p>
+<a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
+                        View Source</a>
+</div>
+</div>
+</div> i wnat u to udate this and we will be having catogry web project app project and security [roject for webiste project i have 3 enterprise project work on mai main focus was on the backend first onee https://sharkify.ai/Home whish i worked on backend in the node js and express withmysql as first db and later on changed t  ppostgressc

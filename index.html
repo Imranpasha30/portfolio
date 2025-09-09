@@ -339,47 +339,198 @@
   
 <!-- Projects Window -->
 <div class="window" id="projects-window" style="top: 180px; left: 450px; width: 550px; height: 450px;">
-<div class="title-bar">
-<div class="title-bar-left">
-<i class="fas fa-code"></i>
-<span>Security Projects</span>
+  <div class="title-bar">
+    <div class="title-bar-left">
+      <i class="fas fa-code"></i>
+      <span>Projects</span>
+    </div>
+    <div class="title-bar-controls">
+      <span class="control-btn minimize-btn" data-action="minimize" data-window="projects-window">−</span>
+      <span class="control-btn maximize-btn" data-action="maximize" data-window="projects-window">□</span>
+      <span class="control-btn close-btn" data-action="close" data-window="projects-window">×</span>
+    </div>
+  </div>
+
+  <div class="window-content" id="projects-list" style="padding: 15px; overflow-y: auto;">
+    <!-- Web Projects -->
+    <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+      <i class="fas fa-globe"></i> Web Projects
+    </h2>
+
+    <!-- Sharkify.ai -->
+    <div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+      <h3 style="margin: 0 0 8px 0; color: #fff;">
+        <i class="fas fa-robot"></i> Sharkify.ai — AI-driven Digital Growth
+      </h3>
+      <p style="margin: 0 0 8px 0; color: #ccc;">
+        Backend-focused contribution with Node.js and Express; data layer migration from MySQL to PostgreSQL; storage on AWS S3; compute on AWS EC2; and CI/CD via GitHub Actions for automated deployments.
+      </p>
+      <p style="margin: 0 0 8px 0; color: #ccc;">
+        Tech: Node.js, Express, MySQL → PostgreSQL, AWS S3/EC2, GitHub Actions.
+      </p>
+      <a href="https://sharkify.ai/Home" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+        <i class="fas fa-external-link-alt"></i> Visit Site
+      </a>
+    </div>
+
+    <!-- Bose American Academy -->
+    <div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+      <h3 style="margin: 0 0 8px 0; color: #fff;">
+        <i class="fas fa-user-graduate"></i> Bose American Academy — Youth & Career Empowerment
+      </h3>
+      <p style="margin: 0 0 8px 0; color: #ccc;">
+        Angular frontend with Node.js/Express backend and JWT auth; infrastructure aligned for production; supports placement assistance, study abroad, and job fair initiatives via the Bose Youth Card.
+      </p>
+      <p style="margin: 0 0 8px 0; color: #ccc;">
+        Tech: Angular, Node.js, Express, JWT, production-ready deployment setup.
+      </p>
+      <a href="https://www.boseamerican.academy/Home" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+        <i class="fas fa-external-link-alt"></i> Visit Site
+      </a>
+    </div>
+
+    <!-- Shyra AI — SEO Content Generator -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+  <h3 style="margin: 0 0 8px 0; color: #fff;">
+    <i class="fas fa-magnifying-glass-chart"></i> Shyra AI — SEO Content Generator
+    <span style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+      Live
+    </span>
+  </h3>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    AI-powered website designed for SEO workflows: generates optimized article outlines, meta titles/descriptions, keyword sets, and YouTube assets (titles, tags, descriptions) to accelerate publishing and improve discoverability.
+  </p>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    Purpose-built SEO interface for rapid content ideation and on-page optimization.
+  </p>
+  <a href="https://shyra.chat.sharkify.ai/" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+    <i class="fas fa-external-link-alt"></i> Visit Site
+  </a>
 </div>
-<div class="title-bar-controls">
-<span class="control-btn minimize-btn" data-action="minimize" data-window="projects-window">−</span>
-<span class="control-btn maximize-btn" data-action="maximize" data-window="projects-window">□</span>
-<span class="control-btn close-btn" data-action="close" data-window="projects-window">×</span>
-</div>
-</div>
-<div class="window-content" id="projects-list">
+
+
+    <!-- App Projects -->
 <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
-<i class="fas fa-shield-alt"></i> Security Projects
-                </h2>
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-<h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-bug"></i> Vulnerability Scanner</h3>
-<p style="margin: 0 0 8px 0; color: #ccc;">Automated web application vulnerability scanner built
-                        with Python. Detects common security flaws like XSS, SQL injection, and directory traversal.</p>
-<a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
-                        View on GitHub</a>
+  <i class="fas fa-mobile-alt"></i> App Projects
+</h2>
+
+<!-- Kaizer Fit — Fitness App (Pending Review) -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+  <h3 style="margin: 0 0 8px 0; color: #fff;">
+    <i class="fas fa-dumbbell"></i> Kaizer Fit — Fitness App
+    <span style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+      Pending Review
+    </span>
+  </h3>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    A comprehensive fitness tracking application currently under review in the Google Play Store and Apple App Store; links will be updated as soon as the app goes live.
+  </p>
+  <div style="margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap;">
+    <button class="toolbar-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
+      <i class="fab fa-google-play"></i> Google Play (Pending)
+    </button>
+    <button class="toolbar-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
+      <i class="fab fa-apple"></i> App Store (Pending)
+    </button>
+  </div>
 </div>
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-<h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-network-wired"></i> Network Penetration
-                        Tool</h3>
-<p style="margin: 0 0 8px 0; color: #ccc;">Custom penetration testing framework for network security
-                        assessment. Includes port scanning, service enumeration, and exploit modules.</p>
-<a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fas fa-external-link-alt"></i> Live Demo</a> |
-                    <a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
-                        GitHub</a>
+
+
+    <!-- Security Projects -->
+    <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+      <i class="fas fa-shield-alt"></i> Security Projects
+    </h2>
+
+    <!-- Infoga-like Email Threat/Phishing Analyzer -->
+    <div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+      <h3 style="margin: 0 0 8px 0; color: #fff;">
+        <i class="fas fa-envelope-open-text"></i> Email Threat & Phishing Analyzer (Infoga-type)
+      </h3>
+      <p style="margin: 0 0 8px 0; color: #ccc;">
+        Utility to analyze suspicious emails and embedded links for indicators of phishing, spoofing, and malicious infrastructure, inspired by Infoga-style OSINT workflows.
+      </p>
+      <a href="https://github.com/Imranpasha30/infoga" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+        <i class="fab fa-github"></i> View Repository
+      </a>
+    </div>
+
+
+    <!-- Personal Projects -->
+<h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+  <i class="fas fa-user-cog"></i> Personal Projects
+</h2>
+
+<!-- chatZ (Android social app) -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+  <h3 style="margin: 0 0 8px 0; color: #fff;">
+    <i class="fas fa-comments"></i> chatZ — Android Social App
+  </h3>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    Social media Android application prototype focused on messaging and engagement workflows.
+  </p>
+  <a href="https://github.com/Imranpasha30/androidapp" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+    <i class="fab fa-github"></i> Source Repository
+  </a>
 </div>
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-<h3 style="margin: 0 0 8px 0; color: #fff;"><i class="fas fa-desktop"></i> Imran Linux Portfolio OS
-                    </h3>
-<p style="margin: 0 0 8px 0; color: #ccc;">Interactive web-based portfolio that simulates a Imran
-                        Linux desktop environment. Built with HTML, CSS, and JavaScript.</p>
-<a href="#" style="color: var(--accent-color); text-decoration: none;"><i class="fab fa-github"></i>
-                        View Source</a>
+
+<!-- MERN + GraphQL copy -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+  <h3 style="margin: 0 0 8px 0; color: #fff;">
+    <i class="fas fa-layer-group"></i> MERN Stack (GraphQL)
+  </h3>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    MERN stack experiment integrating GraphQL APIs for schema-first backend iterations.
+  </p>
+  <a href="https://github.com/Imranpasha30/imran---mern-stack-using-graph-ql---Copy" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+    <i class="fab fa-github"></i> Source Repository
+  </a>
 </div>
+
+<!-- Logistics -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+  <h3 style="margin: 0 0 8px 0; color: #fff;">
+    <i class="fas fa-truck"></i> Logistics
+  </h3>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    Early-stage logistics workflow prototype with basic modules scaffolded for iteration.
+  </p>
+  <a href="https://github.com/Imranpasha30/logestics-" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+    <i class="fab fa-github"></i> Source Repository
+  </a>
 </div>
+
+<!-- Travellers Website -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+  <h3 style="margin: 0 0 8px 0; color: #fff;">
+    <i class="fas fa-plane-departure"></i> Travellers Website
+  </h3>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    Frontend-focused travel website scaffold for experimenting with UI/UX flows and content.
+  </p>
+  <a href="https://github.com/Imranpasha30/travellers-website" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+    <i class="fab fa-github"></i> Source Repository
+  </a>
 </div>
+
+<!-- Map OJ -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+  <h3 style="margin: 0 0 8px 0; color: #fff;">
+    <i class="fas fa-map-marked-alt"></i> Map OJ
+  </h3>
+  <p style="margin: 0 0 8px 0; color: #ccc;">
+    Mapping and geospatial playground project for experimenting with coordinates and rendering.
+  </p>
+  <a href="https://github.com/Imranpasha30/map_oj" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+    <i class="fab fa-github"></i> Source Repository
+  </a>
+</div>
+
+<!-- APK Workspace -->
+
+
+  </div>
+</div>
+
 <!-- Bottom Dock (Centered) -->
 <div id="dock">
 <div class="dock-section">
