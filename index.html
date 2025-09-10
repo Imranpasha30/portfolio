@@ -1,560 +1,632 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Imran Linux Desktop - Portfolio</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link rel="stylesheet" href="imran_linux_desktop.css">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Imran Linux Desktop - Portfolio</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="imran_linux_desktop.css">
 
 
 </head>
+
 <body>
-<div id="desktop">
-<!-- Top Panel -->
-<div id="top-panel">
-<div class="panel-left">
-<button id="applications-menu">
-<i class="fas fa-th"></i> Applications
-                </button>
-<div id="window-list"></div>
-</div>
-<div class="panel-right">
-<span id="clock"></span>
-<i class="fas fa-wifi"></i>
-<i class="fas fa-volume-up"></i>
-<i class="fas fa-battery-three-quarters"></i>
-</div>
-</div>
-<!-- Desktop Icons -->
-<div class="desktop-icon" data-window="terminal-window" style="top: 60px; left: 20px;">
-<i class="fas fa-terminal"></i>
-<span>Terminal</span>
-</div>
-<div class="desktop-icon" data-window="file-manager-window" style="top: 60px; left: 120px;">
-<i class="fas fa-folder"></i>
-<span>Files</span>
-</div>
-<div class="desktop-icon" data-window="browser-window" style="top: 160px; left: 20px;">
-<i class="fab fa-firefox"></i>
-<span>Firefox</span>
-</div>
-<div class="desktop-icon" data-window="about-window" style="top: 160px; left: 120px;">
-<i class="fas fa-user"></i>
-<span>About</span>
-</div>
-<div class="desktop-icon" data-window="projects-window" style="top: 260px; left: 20px;">
-<i class="fas fa-code"></i>
-<span>Projects</span>
-</div>
-
-
-<!-- try hack me badge -->
-<div class="tryhackme-badge" style="position: absolute; top: 60px; right: 20px;">
-    <div class="badge-container">
-        <h4><i class="fas fa-shield-alt"></i> TryHackMe Profile</h4>
-        <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=1016281" 
-                style="border: none; width: 300px; height: 120px; background: rgba(30, 30, 30, 0.95); border-radius: 8px;"></iframe>
-        <div class="badge-fallback" style="display: none;">
-            <div class="badge-info">
-                <h5>Imranpasha [0x4]</h5>
-                <p>🏆 Rank: 529,527</p>
-                <p>📊 Streak: 7 days</p>
-                <p>🎖️ Badges: 16</p>
-                <a href="https://tryhackme.com/p/Imranpasha" target="_blank">View Full Profile</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Applications Menu -->
-<div id="app-menu">
-<div class="app-menu-section">
-<h3>Development</h3>
-<div class="app-item" data-window="terminal-window">
-<i class="fas fa-terminal"></i>
-<span>Terminal</span>
-</div>
-<div class="app-item" data-window="projects-window">
-<i class="fas fa-code"></i>
-<span>Projects</span>
-</div>
-</div>
-<div class="app-menu-section">
-<h3>Internet</h3>
-<div class="app-item" data-window="browser-window">
-<i class="fab fa-firefox"></i>
-<span>Firefox Browser</span>
-</div>
-</div>
-<div class="app-menu-section">
-<h3>System</h3>
-<div class="app-item" data-window="file-manager-window">
-<i class="fas fa-folder"></i>
-<span>File Manager</span>
-</div>
-<div class="app-item" data-window="about-window">
-<i class="fas fa-user"></i>
-<span>About Me</span>
-</div>
-</div>
-</div>
-<!-- Context Menu -->
-<div id="context-menu">
-<div class="context-item" onclick="openTerminal()">
-<i class="fas fa-terminal"></i> Open Terminal
-            </div>
-<div class="context-item" onclick="refreshDesktop()">
-<i class="fas fa-sync"></i> Refresh
-            </div>
-<div class="context-item" onclick="showProperties()">
-<i class="fas fa-cog"></i> Properties
-            </div>
-</div>
-<!-- Windows -->
-<!-- Terminal Window -->
-<div class="window" id="terminal-window" style="top: 100px; left: 200px; width: 700px; height: 400px;">
-<div class="title-bar">
-<div class="title-bar-left">
-<i class="fas fa-terminal"></i>
-<span>Imran@Pasha: ~</span>
-</div>
-<div class="title-bar-controls">
-<span class="control-btn minimize-btn" data-action="minimize" data-window="terminal-window">−</span>
-<span class="control-btn maximize-btn" data-action="maximize" data-window="terminal-window">□</span>
-<span class="control-btn close-btn" data-action="close" data-window="terminal-window">×</span>
-</div>
-</div>
-<div class="window-content" id="terminal-content">
-<div id="terminal-output"></div>
-<div id="terminal-input-line">
-<span class="terminal-prompt">Imran@Pasha:~$</span>
-<input autocomplete="off" autofocus="" id="terminal-input" type="text"/>
-<span class="cursor"></span>
-</div>
-</div>
-</div>
-<!-- File Manager Window -->
-<div class="window" id="file-manager-window" style="top: 120px; left: 300px; width: 600px; height: 450px;">
-<div class="title-bar">
-<div class="title-bar-left">
-<i class="fas fa-folder"></i>
-<span>File Manager - /home/Imran</span>
-</div>
-<div class="title-bar-controls">
-<span class="control-btn minimize-btn" data-action="minimize" data-window="file-manager-window">−</span>
-<span class="control-btn maximize-btn" data-action="maximize" data-window="file-manager-window">□</span>
-<span class="control-btn close-btn" data-action="close" data-window="file-manager-window">×</span>
-</div>
-</div>
-<div class="window-content" style="padding: 0;">
-<div class="file-manager-toolbar">
-<button class="toolbar-btn"><i class="fas fa-arrow-left"></i> Back</button>
-<button class="toolbar-btn"><i class="fas fa-arrow-right"></i> Forward</button>
-<button class="toolbar-btn"><i class="fas fa-home"></i> Home</button>
-<span style="margin-left: auto; color: #ccc;">/home/Imran</span>
-</div>
-<div class="file-list">
-<div class="file-item">
-<i class="fas fa-folder"></i>
-<span>Desktop</span>
-</div>
-<div class="file-item">
-<i class="fas fa-folder"></i>
-<span>Documents</span>
-</div>
-<div class="file-item">
-<i class="fas fa-folder"></i>
-<span>Downloads</span>
-</div>
-<div class="file-item">
-<i class="fas fa-folder"></i>
-<span>Pictures</span>
-</div>
-<div class="file-item">
-<i class="fas fa-file-code"></i>
-<span>script.py</span>
-</div>
-<div class="file-item">
-<i class="fas fa-file-alt"></i>
-<span>notes.txt</span>
-</div>
-<div class="file-item">
-<i class="fas fa-file-archive"></i>
-<span>tools.zip</span>
-</div>
-<div class="file-item">
-<i class="fas fa-file-image"></i>
-<span>wallpaper.jpg</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Enhanced Browser Window -->
-<div class="window" id="browser-window" style="top: 80px; left: 250px; width: 900px; height: 600px;">
-<div class="title-bar">
-<div class="title-bar-left">
-<i class="fab fa-firefox"></i>
-<span id="browser-title">Mozilla Firefox</span>
-</div>
-<div class="title-bar-controls">
-<span class="control-btn minimize-btn" data-action="minimize" data-window="browser-window">−</span>
-<span class="control-btn maximize-btn" data-action="maximize" data-window="browser-window">□</span>
-<span class="control-btn close-btn" data-action="close" data-window="browser-window">×</span>
-</div>
-</div>
-<div class="window-content" style="padding: 0; display: flex; flex-direction: column;">
-<div class="loading-bar" id="loading-bar"></div>
-<!-- Tab Bar -->
-<div class="browser-tabs">
-<div class="browser-tab active" data-tab-id="1">
-<i class="fas fa-globe"></i>
-<span class="tab-title">New Tab</span>
-<span class="tab-close" onclick="closeTab(1)">×</span>
-</div>
-<button class="add-tab-btn" onclick="addNewTab()">+</button>
-</div>
-<!-- Bookmarks Bar -->
-<div class="browser-bookmarks">
-<a class="bookmark-item" href="#" onclick="navigateToUrl('https://google.com')">
-<i class="fab fa-google"></i> Google
-                    </a>
-<a class="bookmark-item" href="#" onclick="navigateToUrl('https://github.com')">
-<i class="fab fa-github"></i> GitHub
-                    </a>
-<a class="bookmark-item" href="#" onclick="navigateToUrl('https://stackoverflow.com')">
-<i class="fab fa-stack-overflow"></i> Stack Overflow
-                    </a>
-<a class="bookmark-item" href="#" onclick="navigateToUrl('https://developer.mozilla.org')">
-<i class="fab fa-firefox"></i> MDN
-                    </a>
-</div>
-<!-- Navigation Toolbar -->
-<div class="browser-toolbar">
-<button class="browser-nav-btn" disabled="" id="back-btn" onclick="goBack()">
-<i class="fas fa-arrow-left"></i>
-</button>
-<button class="browser-nav-btn" disabled="" id="forward-btn" onclick="goForward()">
-<i class="fas fa-arrow-right"></i>
-</button>
-<button class="browser-nav-btn" onclick="refreshPage()">
-<i class="fas fa-sync"></i>
-</button>
-<input id="url-input" placeholder="Search or enter address" type="text" value="https://google.com"/>
-<button class="browser-nav-btn" onclick="navigateToUrlFromInput()">
-<i class="fas fa-search"></i>
-</button>
-<button class="browser-nav-btn" onclick="toggleBookmark()">
-<i class="fas fa-star"></i>
-</button>
-<button class="browser-nav-btn" onclick="openSettings()">
-<i class="fas fa-cog"></i>
-</button>
-</div>
-<!-- Browser Content -->
-<div style="flex-grow: 1; position: relative;">
-<iframe id="browser-frame" onload="onPageLoad()" src="https://google.com" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
-</div>
-</div>
-</div>
-<!-- About Window -->
-<!-- About Window -->
-<div class="window" id="about-window" style="top: 150px; left: 400px; width: 500px; height: 400px;">
-    <div class="title-bar">
-      <div class="title-bar-left">
-        <i class="fas fa-user"></i>
-        <span>About Me</span>
+  <div id="desktop">
+    <!-- Top Panel -->
+    <div id="top-panel">
+      <div class="panel-left">
+        <button id="applications-menu">
+          <i class="fas fa-th"></i> Applications
+        </button>
+        <div id="window-list"></div>
       </div>
-      <div class="title-bar-controls">
-        <span class="control-btn minimize-btn" data-action="minimize" data-window="about-window">−</span>
-        <span class="control-btn maximize-btn" data-action="maximize" data-window="about-window">□</span>
-        <span class="control-btn close-btn" data-action="close" data-window="about-window">×</span>
+      <div class="panel-right">
+        <span id="clock"></span>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-volume-up"></i>
+        <i class="fas fa-battery-three-quarters"></i>
       </div>
     </div>
-  
-    <div class="window-content">
-      <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
-        <i class="fas fa-user-circle"></i> About Me
-      </h2>
-  
-      <p>Hello! I'm <strong>Imran Pasha</strong> — a <strong>Full‑Stack Developer</strong> and <strong>Cybersecurity Practitioner</strong>.</p>
-      <p>
-        I build end‑to‑end mobile and web systems using <strong>Flutter</strong> with <strong>FastAPI</strong> and <strong>Django</strong> backends,
-        <strong>Node.js/Express</strong> services, and <strong>React</strong> frontends, delivered with <strong>Docker</strong> and <strong>AWS</strong> CI/CD. 
-      </p>
-      <p>
-        Over the past <strong>8 months</strong>, I have focused on <strong>ethical hacking</strong>, <strong>reconnaissance</strong>,
-        <strong>interception proxy design</strong>, and <strong>vulnerability triage</strong>, using a personalized <strong>Imran Linux</strong>
-        environment and industry security tooling to drive secure‑by‑default engineering.
-      </p>
-  
-      <h3 style="color: var(--accent-color);"><i class="fas fa-shield-alt"></i> TryHackMe Profile</h3>
-      <div class="tryhackme-section" style="margin: 15px 0;">
-        <iframe
-          src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=1016281"
-          style="border: none; width: 100%; height: 100px; background: rgba(0, 0, 0, 0.3); border-radius: 5px;"
-          onload="this.style.display='block'"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-        </iframe>
-        <div class="badge-fallback" style="display: none; padding: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 5px;">
-          
-          <a href="https://tryhackme.com/p/Imranpasha" target="_blank" style="color: var(--accent-color);">
-            <i class="fas fa-external-link-alt"></i> View Full TryHackMe Profile
-          </a>
-        </div>
-      </div>
-  
-      <h3 style="color: var(--accent-color);"><i class="fas fa-tools"></i> Skills &amp; Tools</h3>
-      <ul>
-        <li><strong>Languages:</strong> Python, Dart, JavaScript/TypeScript, SQL</li>
-        <li><strong>Backends:</strong> FastAPI, Django/DRF, Node.js/Express, REST APIs</li>
-        <li><strong>Frontends:</strong> Flutter (mobile), React (web)</li>
-        <li><strong>DevOps:</strong> Docker, AWS</li>
-        <li><strong>Security Tools:</strong> Nmap, Metasploit, Burp Suite, Wireshark</li>
-        <li><strong>Security Standards:</strong> OWASP, NIST, ISO 27001</li>
-        <li><strong>Specialties:</strong>API creation,API Security, Web App Testing,  Network Security/li>
-      </ul>
-  
-      <h3 style="color: var(--accent-color);"><i class="fas fa-envelope"></i> Contact</h3>
-      <p>
-        <i class="fas fa-envelope"></i> Email: imranpasha.ahmed@gmail.com<br/>
-        <i class="fab fa-github"></i> GitHub: github.com/Imranpasha30/<br/>
-        <i class="fab fa-linkedin"></i> LinkedIn: <a href="https://www.linkedin.com/in/imran-pasha-019b2b213" target="_blank">www.linkedin.com/in/imran-pasha-019b2b213</a>
-      </p>
+    <!-- Desktop Icons -->
+    <div class="desktop-icon" data-window="terminal-window" style="top: 60px; left: 20px;">
+      <i class="fas fa-terminal"></i>
+      <span>Terminal</span>
     </div>
-  </div>
-  
-<!-- Projects Window -->
-<div class="window" id="projects-window" style="top: 180px; left: 450px; width: 550px; height: 450px;">
-  <div class="title-bar">
-    <div class="title-bar-left">
+    <div class="desktop-icon" data-window="file-manager-window" style="top: 60px; left: 120px;">
+      <i class="fas fa-folder"></i>
+      <span>Files</span>
+    </div>
+    <div class="desktop-icon" data-window="browser-window" style="top: 160px; left: 20px;">
+      <i class="fab fa-firefox"></i>
+      <span>Firefox</span>
+    </div>
+    <div class="desktop-icon" data-window="about-window" style="top: 160px; left: 120px;">
+      <i class="fas fa-user"></i>
+      <span>About</span>
+    </div>
+    <div class="desktop-icon" data-window="projects-window" style="top: 260px; left: 20px;">
       <i class="fas fa-code"></i>
       <span>Projects</span>
     </div>
-    <div class="title-bar-controls">
-      <span class="control-btn minimize-btn" data-action="minimize" data-window="projects-window">−</span>
-      <span class="control-btn maximize-btn" data-action="maximize" data-window="projects-window">□</span>
-      <span class="control-btn close-btn" data-action="close" data-window="projects-window">×</span>
+
+
+    <!-- try hack me badge -->
+    <div class="tryhackme-badge" style="position: absolute; top: 60px; right: 20px;">
+      <div class="badge-container">
+        <h4><i class="fas fa-shield-alt"></i> TryHackMe Profile</h4>
+        <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=1016281"
+          style="border: none; width: 300px; height: 120px; background: rgba(30, 30, 30, 0.95); border-radius: 8px;"></iframe>
+        <div class="badge-fallback" style="display: none;">
+          <div class="badge-info">
+            <h5>Imranpasha [0x4]</h5>
+            <p>🏆 Rank: 529,527</p>
+            <p>📊 Streak: 7 days</p>
+            <p>🎖️ Badges: 16</p>
+            <a href="https://tryhackme.com/p/Imranpasha" target="_blank">View Full Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Applications Menu -->
+    <div id="app-menu">
+      <div class="app-menu-section">
+        <h3>Development</h3>
+        <div class="app-item" data-window="terminal-window">
+          <i class="fas fa-terminal"></i>
+          <span>Terminal</span>
+        </div>
+        <div class="app-item" data-window="projects-window">
+          <i class="fas fa-code"></i>
+          <span>Projects</span>
+        </div>
+      </div>
+      <div class="app-menu-section">
+        <h3>Internet</h3>
+        <div class="app-item" data-window="browser-window">
+          <i class="fab fa-firefox"></i>
+          <span>Firefox Browser</span>
+        </div>
+      </div>
+      <div class="app-menu-section">
+        <h3>System</h3>
+        <div class="app-item" data-window="file-manager-window">
+          <i class="fas fa-folder"></i>
+          <span>File Manager</span>
+        </div>
+        <div class="app-item" data-window="about-window">
+          <i class="fas fa-user"></i>
+          <span>About Me</span>
+        </div>
+      </div>
+    </div>
+    <!-- Context Menu -->
+    <div id="context-menu">
+      <div class="context-item" onclick="openTerminal()">
+        <i class="fas fa-terminal"></i> Open Terminal
+      </div>
+      <div class="context-item" onclick="refreshDesktop()">
+        <i class="fas fa-sync"></i> Refresh
+      </div>
+      <div class="context-item" onclick="showProperties()">
+        <i class="fas fa-cog"></i> Properties
+      </div>
+    </div>
+    <!-- Windows -->
+    <!-- Terminal Window -->
+    <div class="window" id="terminal-window" style="top: 100px; left: 200px; width: 700px; height: 400px;">
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <i class="fas fa-terminal"></i>
+          <span>Imran@Pasha: ~</span>
+        </div>
+        <div class="title-bar-controls">
+          <span class="control-btn minimize-btn" data-action="minimize" data-window="terminal-window">−</span>
+          <span class="control-btn maximize-btn" data-action="maximize" data-window="terminal-window">□</span>
+          <span class="control-btn close-btn" data-action="close" data-window="terminal-window">×</span>
+        </div>
+      </div>
+      <div class="window-content" id="terminal-content">
+        <div id="terminal-output"></div>
+        <div id="terminal-input-line">
+          <span class="terminal-prompt">Imran@Pasha:~$</span>
+          <input autocomplete="off" autofocus="" id="terminal-input" type="text" />
+          <span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+    <!-- File Manager Window -->
+    <div class="window" id="file-manager-window" style="top: 120px; left: 300px; width: 600px; height: 450px;">
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <i class="fas fa-folder"></i>
+          <span>File Manager - /home/Imran</span>
+        </div>
+        <div class="title-bar-controls">
+          <span class="control-btn minimize-btn" data-action="minimize" data-window="file-manager-window">−</span>
+          <span class="control-btn maximize-btn" data-action="maximize" data-window="file-manager-window">□</span>
+          <span class="control-btn close-btn" data-action="close" data-window="file-manager-window">×</span>
+        </div>
+      </div>
+      <div class="window-content" style="padding: 0;">
+        <div class="file-manager-toolbar">
+          <button class="toolbar-btn"><i class="fas fa-arrow-left"></i> Back</button>
+          <button class="toolbar-btn"><i class="fas fa-arrow-right"></i> Forward</button>
+          <button class="toolbar-btn"><i class="fas fa-home"></i> Home</button>
+          <span style="margin-left: auto; color: #ccc;">/home/Imran</span>
+        </div>
+        <div class="file-list">
+          <div class="file-item">
+            <i class="fas fa-folder"></i>
+            <span>Desktop</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-folder"></i>
+            <span>Documents</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-folder"></i>
+            <span>Downloads</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-folder"></i>
+            <span>Pictures</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-file-code"></i>
+            <span>script.py</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-file-alt"></i>
+            <span>notes.txt</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-file-archive"></i>
+            <span>tools.zip</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-file-image"></i>
+            <span>wallpaper.jpg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Enhanced Browser Window -->
+    <div class="window" id="browser-window" style="top: 80px; left: 250px; width: 900px; height: 600px;">
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <i class="fab fa-firefox"></i>
+          <span id="browser-title">Mozilla Firefox</span>
+        </div>
+        <div class="title-bar-controls">
+          <span class="control-btn minimize-btn" data-action="minimize" data-window="browser-window">−</span>
+          <span class="control-btn maximize-btn" data-action="maximize" data-window="browser-window">□</span>
+          <span class="control-btn close-btn" data-action="close" data-window="browser-window">×</span>
+        </div>
+      </div>
+      <div class="window-content" style="padding: 0; display: flex; flex-direction: column;">
+        <div class="loading-bar" id="loading-bar"></div>
+        <!-- Tab Bar -->
+        <div class="browser-tabs">
+          <div class="browser-tab active" data-tab-id="1">
+            <i class="fas fa-globe"></i>
+            <span class="tab-title">New Tab</span>
+            <span class="tab-close" onclick="closeTab(1)">×</span>
+          </div>
+          <button class="add-tab-btn" onclick="addNewTab()">+</button>
+        </div>
+        <!-- Bookmarks Bar -->
+        <div class="browser-bookmarks">
+          <a class="bookmark-item" href="#" onclick="navigateToUrl('https://google.com')">
+            <i class="fab fa-google"></i> Google
+          </a>
+          <a class="bookmark-item" href="#" onclick="navigateToUrl('https://github.com')">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a class="bookmark-item" href="#" onclick="navigateToUrl('https://stackoverflow.com')">
+            <i class="fab fa-stack-overflow"></i> Stack Overflow
+          </a>
+          <a class="bookmark-item" href="#" onclick="navigateToUrl('https://developer.mozilla.org')">
+            <i class="fab fa-firefox"></i> MDN
+          </a>
+        </div>
+        <!-- Navigation Toolbar -->
+        <div class="browser-toolbar">
+          <button class="browser-nav-btn" disabled="" id="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button class="browser-nav-btn" disabled="" id="forward-btn" onclick="goForward()">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <button class="browser-nav-btn" onclick="refreshPage()">
+            <i class="fas fa-sync"></i>
+          </button>
+          <input id="url-input" placeholder="Search or enter address" type="text" value="https://google.com" />
+          <button class="browser-nav-btn" onclick="navigateToUrlFromInput()">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="browser-nav-btn" onclick="toggleBookmark()">
+            <i class="fas fa-star"></i>
+          </button>
+          <button class="browser-nav-btn" onclick="openSettings()">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <!-- Browser Content -->
+        <div style="flex-grow: 1; position: relative;">
+          <iframe id="browser-frame" onload="onPageLoad()" src="https://google.com"
+            style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
+        </div>
+      </div>
+    </div>
+    <!-- About Window -->
+    <!-- About Window -->
+    <div class="window" id="about-window" style="top: 150px; left: 400px; width: 500px; height: 400px;">
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <i class="fas fa-user"></i>
+          <span>About Me</span>
+        </div>
+        <div class="title-bar-controls">
+          <span class="control-btn minimize-btn" data-action="minimize" data-window="about-window">−</span>
+          <span class="control-btn maximize-btn" data-action="maximize" data-window="about-window">□</span>
+          <span class="control-btn close-btn" data-action="close" data-window="about-window">×</span>
+        </div>
+      </div>
+
+      <div class="window-content">
+        <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+          <i class="fas fa-user-circle"></i> About Me
+        </h2>
+
+        <p>Hello! I'm <strong>Imran Pasha</strong> — a <strong>Full‑Stack Developer</strong> and <strong>Cybersecurity
+            Practitioner</strong>.</p>
+        <p>
+          I build end‑to‑end mobile and web systems using <strong>Flutter</strong> with <strong>FastAPI</strong> and
+          <strong>Django</strong> backends,
+          <strong>Node.js/Express</strong> services, and <strong>React</strong> frontends, delivered with
+          <strong>Docker</strong> and <strong>AWS</strong> CI/CD.
+        </p>
+        <p>
+          Over the past <strong>8 months</strong>, I have focused on <strong>ethical hacking</strong>,
+          <strong>reconnaissance</strong>,
+          <strong>interception proxy design</strong>, and <strong>vulnerability triage</strong>, using a personalized
+          <strong>Imran Linux</strong>
+          environment and industry security tooling to drive secure‑by‑default engineering.
+        </p>
+
+        <h3 style="color: var(--accent-color);"><i class="fas fa-shield-alt"></i> TryHackMe Profile</h3>
+        <div class="tryhackme-section" style="margin: 15px 0;">
+          <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=1016281"
+            style="border: none; width: 100%; height: 100px; background: rgba(0, 0, 0, 0.3); border-radius: 5px;"
+            onload="this.style.display='block'"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+          </iframe>
+          <div class="badge-fallback"
+            style="display: none; padding: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 5px;">
+
+            <a href="https://tryhackme.com/p/Imranpasha" target="_blank" style="color: var(--accent-color);">
+              <i class="fas fa-external-link-alt"></i> View Full TryHackMe Profile
+            </a>
+          </div>
+        </div>
+
+        <h3 style="color: var(--accent-color);"><i class="fas fa-tools"></i> Skills &amp; Tools</h3>
+        <ul>
+          <li><strong>Languages:</strong> Python, Dart, JavaScript/TypeScript, SQL</li>
+          <li><strong>Backends:</strong> FastAPI, Django/DRF, Node.js/Express, REST APIs</li>
+          <li><strong>Frontends:</strong> Flutter (mobile), React (web)</li>
+          <li><strong>DevOps:</strong> Docker, AWS</li>
+          <li><strong>Security Tools:</strong> Nmap, Metasploit, Burp Suite, Wireshark</li>
+          <li><strong>Security Standards:</strong> OWASP, NIST, ISO 27001</li>
+          <li><strong>Specialties:</strong>API creation,API Security, Web App Testing, Network Security/li>
+        </ul>
+
+        <h3 style="color: var(--accent-color);"><i class="fas fa-envelope"></i> Contact</h3>
+        <p>
+          <i class="fas fa-envelope"></i> Email: imranpasha.ahmed@gmail.com<br />
+          <i class="fab fa-github"></i> GitHub: github.com/Imranpasha30/<br />
+          <i class="fab fa-linkedin"></i> LinkedIn: <a href="https://www.linkedin.com/in/imran-pasha-019b2b213"
+            target="_blank">www.linkedin.com/in/imran-pasha-019b2b213</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Projects Window -->
+    <div class="window" id="projects-window" style="top: 180px; left: 450px; width: 550px; height: 450px;">
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <i class="fas fa-code"></i>
+          <span>Projects</span>
+        </div>
+        <div class="title-bar-controls">
+          <span class="control-btn minimize-btn" data-action="minimize" data-window="projects-window">−</span>
+          <span class="control-btn maximize-btn" data-action="maximize" data-window="projects-window">□</span>
+          <span class="control-btn close-btn" data-action="close" data-window="projects-window">×</span>
+        </div>
+      </div>
+
+      <div class="window-content" id="projects-list" style="padding: 15px; overflow-y: auto;">
+        <!-- Web Projects -->
+        <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+          <i class="fas fa-globe"></i> Web Projects
+        </h2>
+
+        <!-- Sharkify.ai -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-robot"></i> Sharkify.ai — AI-driven Digital Growth
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              Live
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Backend-focused contribution with Node.js and Express; data layer migration from MySQL to PostgreSQL;
+            storage on AWS S3; compute on AWS EC2; and CI/CD via GitHub Actions for automated deployments.
+          </p>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Tech: Node.js, Express, MySQL → PostgreSQL, AWS S3/EC2, GitHub Actions.
+          </p>
+          <a href="https://sharkify.ai/Home" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fas fa-external-link-alt"></i> Visit Site
+          </a>
+        </div>
+
+        <!-- Bose American Academy -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-user-graduate"></i> Bose American Academy — Youth & Career Empowerment
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              Live
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Angular frontend with Node.js/Express backend and JWT auth; infrastructure aligned for production; supports
+            placement assistance, study abroad, and job fair initiatives via the Bose Youth Card.
+          </p>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Tech: Angular, Node.js, Express, JWT, production-ready deployment setup.
+          </p>
+          <a href="https://www.boseamerican.academy/Home" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fas fa-external-link-alt"></i> Visit Site
+          </a>
+        </div>
+
+        <!-- Shyra AI — SEO Content Generator -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-magnifying-glass-chart"></i> Shyra AI — SEO Content Generator
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              Live
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            AI-powered website designed for SEO workflows: generates optimized article outlines, meta
+            titles/descriptions, keyword sets, and YouTube assets (titles, tags, descriptions) to accelerate publishing
+            and improve discoverability.
+          </p>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Purpose-built SEO interface for rapid content ideation and on-page optimization.
+          </p>
+          <a href="https://shyra.chat.sharkify.ai/" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fas fa-external-link-alt"></i> Visit Site
+          </a>
+        </div>
+
+
+        <!-- App Projects -->
+        <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+          <i class="fas fa-mobile-alt"></i> App Projects
+        </h2>
+
+        <!-- Kaizer Fit — Fitness App (Pending Review) -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-dumbbell"></i> Kaizer Fit — Fitness App
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              Pending Review
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            A comprehensive fitness tracking application currently under review in the Google Play Store and Apple App
+            Store; links will be updated as soon as the app goes live.
+          </p>
+          <div style="margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="toolbar-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
+              <i class="fab fa-google-play"></i> Google Play (Pending)
+            </button>
+            <button class="toolbar-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
+              <i class="fab fa-apple"></i> App Store (Pending)
+            </button>
+          </div>
+        </div>
+
+
+        <!-- Security Projects -->
+        <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+          <i class="fas fa-shield-alt"></i> Security Projects
+
+
+        </h2>
+
+        <!-- Infoga-like Email Threat/Phishing Analyzer -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-envelope-open-text"></i> Email Threat & Phishing Analyzer (Infoga-type)
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              GitHub
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Utility to analyze suspicious emails and embedded links for indicators of phishing, spoofing, and malicious
+            infrastructure, inspired by Infoga-style OSINT workflows.
+          </p>
+          <a href="https://github.com/Imranpasha30/infoga" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fab fa-github"></i> View Repository
+          </a>
+        </div>
+
+
+        <!-- Personal Projects -->
+        <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
+          <i class="fas fa-user-cog"></i> Personal Projects
+        </h2>
+
+        <!-- chatZ (Android social app) -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-comments"></i> chatZ — Android Social App
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              GitHub
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Social media Android application prototype focused on messaging and engagement workflows.
+          </p>
+          <a href="https://github.com/Imranpasha30/androidapp" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fab fa-github"></i> Source Repository
+          </a>
+        </div>
+
+        <!-- MERN + GraphQL copy -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-layer-group"></i> MERN Stack (GraphQL)
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              GitHub
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            MERN stack experiment integrating GraphQL APIs for schema-first backend iterations.
+          </p>
+          <a href="https://github.com/Imranpasha30/imran---mern-stack-using-graph-ql---Copy" target="_blank"
+            rel="noopener" style="color: var(--accent-color); text-decoration: none;">
+            <i class="fab fa-github"></i> Source Repository
+          </a>
+        </div>
+
+        <!-- Logistics -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-truck"></i> Logistics
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              GitHub
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Early-stage logistics workflow prototype with basic modules scaffolded for iteration.
+          </p>
+          <a href="https://github.com/Imranpasha30/logestics-" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fab fa-github"></i> Source Repository
+          </a>
+        </div>
+
+        <!-- Travellers Website -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-plane-departure"></i> Travellers Website
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              GitHub
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Frontend-focused travel website scaffold for experimenting with UI/UX flows and content.
+          </p>
+          <a href="https://github.com/Imranpasha30/travellers-website" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fab fa-github"></i> Source Repository
+          </a>
+        </div>
+
+        <!-- Map OJ -->
+        <div
+          style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
+          <h3 style="margin: 0 0 8px 0; color: #fff;">
+            <i class="fas fa-map-marked-alt"></i> Map OJ
+            <span
+              style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
+              GitHub
+            </span>
+          </h3>
+          <p style="margin: 0 0 8px 0; color: #ccc;">
+            Mapping and geospatial playground project for experimenting with coordinates and rendering.
+          </p>
+          <a href="https://github.com/Imranpasha30/map_oj" target="_blank" rel="noopener"
+            style="color: var(--accent-color); text-decoration: none;">
+            <i class="fab fa-github"></i> Source Repository
+          </a>
+        </div>
+
+        <!-- APK Workspace -->
+
+
+      </div>
+    </div>
+
+    <!-- Bottom Dock (Centered) -->
+    <div id="dock">
+      <div class="dock-section">
+        <div class="dock-icon" data-window="file-manager-window" title="File Manager">
+          <i class="fas fa-folder"></i>
+        </div>
+        <div class="dock-icon" data-window="terminal-window" title="Terminal">
+          <i class="fas fa-terminal"></i>
+        </div>
+        <div class="dock-icon" data-window="browser-window" title="Firefox">
+          <i class="fab fa-firefox"></i>
+        </div>
+        <div class="dock-icon" data-window="about-window" title="About Me">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="dock-icon" data-window="projects-window" title="Projects">
+          <i class="fas fa-code"></i>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="window-content" id="projects-list" style="padding: 15px; overflow-y: auto;">
-    <!-- Web Projects -->
-    <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
-      <i class="fas fa-globe"></i> Web Projects
-    </h2>
-
-    <!-- Sharkify.ai -->
-    <div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-      <h3 style="margin: 0 0 8px 0; color: #fff;">
-        <i class="fas fa-robot"></i> Sharkify.ai — AI-driven Digital Growth
-      </h3>
-      <p style="margin: 0 0 8px 0; color: #ccc;">
-        Backend-focused contribution with Node.js and Express; data layer migration from MySQL to PostgreSQL; storage on AWS S3; compute on AWS EC2; and CI/CD via GitHub Actions for automated deployments.
-      </p>
-      <p style="margin: 0 0 8px 0; color: #ccc;">
-        Tech: Node.js, Express, MySQL → PostgreSQL, AWS S3/EC2, GitHub Actions.
-      </p>
-      <a href="https://sharkify.ai/Home" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-        <i class="fas fa-external-link-alt"></i> Visit Site
-      </a>
-    </div>
-
-    <!-- Bose American Academy -->
-    <div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-      <h3 style="margin: 0 0 8px 0; color: #fff;">
-        <i class="fas fa-user-graduate"></i> Bose American Academy — Youth & Career Empowerment
-      </h3>
-      <p style="margin: 0 0 8px 0; color: #ccc;">
-        Angular frontend with Node.js/Express backend and JWT auth; infrastructure aligned for production; supports placement assistance, study abroad, and job fair initiatives via the Bose Youth Card.
-      </p>
-      <p style="margin: 0 0 8px 0; color: #ccc;">
-        Tech: Angular, Node.js, Express, JWT, production-ready deployment setup.
-      </p>
-      <a href="https://www.boseamerican.academy/Home" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-        <i class="fas fa-external-link-alt"></i> Visit Site
-      </a>
-    </div>
-
-    <!-- Shyra AI — SEO Content Generator -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-  <h3 style="margin: 0 0 8px 0; color: #fff;">
-    <i class="fas fa-magnifying-glass-chart"></i> Shyra AI — SEO Content Generator
-    <span style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
-      Live
-    </span>
-  </h3>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    AI-powered website designed for SEO workflows: generates optimized article outlines, meta titles/descriptions, keyword sets, and YouTube assets (titles, tags, descriptions) to accelerate publishing and improve discoverability.
-  </p>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    Purpose-built SEO interface for rapid content ideation and on-page optimization.
-  </p>
-  <a href="https://shyra.chat.sharkify.ai/" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-    <i class="fas fa-external-link-alt"></i> Visit Site
-  </a>
-</div>
-
-
-    <!-- App Projects -->
-<h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
-  <i class="fas fa-mobile-alt"></i> App Projects
-</h2>
-
-<!-- Kaizer Fit — Fitness App (Pending Review) -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-  <h3 style="margin: 0 0 8px 0; color: #fff;">
-    <i class="fas fa-dumbbell"></i> Kaizer Fit — Fitness App
-    <span style="display:inline-block; margin-left:8px; font-size:11px; padding:2px 8px; border-radius:12px; border:1px solid var(--accent-color); color: var(--accent-color); background: rgba(192,86,255,0.15);">
-      Pending Review
-    </span>
-  </h3>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    A comprehensive fitness tracking application currently under review in the Google Play Store and Apple App Store; links will be updated as soon as the app goes live.
-  </p>
-  <div style="margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap;">
-    <button class="toolbar-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
-      <i class="fab fa-google-play"></i> Google Play (Pending)
-    </button>
-    <button class="toolbar-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
-      <i class="fab fa-apple"></i> App Store (Pending)
-    </button>
-  </div>
-</div>
-
-
-    <!-- Security Projects -->
-    <h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
-      <i class="fas fa-shield-alt"></i> Security Projects
-    </h2>
-
-    <!-- Infoga-like Email Threat/Phishing Analyzer -->
-    <div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-      <h3 style="margin: 0 0 8px 0; color: #fff;">
-        <i class="fas fa-envelope-open-text"></i> Email Threat & Phishing Analyzer (Infoga-type)
-      </h3>
-      <p style="margin: 0 0 8px 0; color: #ccc;">
-        Utility to analyze suspicious emails and embedded links for indicators of phishing, spoofing, and malicious infrastructure, inspired by Infoga-style OSINT workflows.
-      </p>
-      <a href="https://github.com/Imranpasha30/infoga" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-        <i class="fab fa-github"></i> View Repository
-      </a>
-    </div>
-
-
-    <!-- Personal Projects -->
-<h2 style="color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;">
-  <i class="fas fa-user-cog"></i> Personal Projects
-</h2>
-
-<!-- chatZ (Android social app) -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-  <h3 style="margin: 0 0 8px 0; color: #fff;">
-    <i class="fas fa-comments"></i> chatZ — Android Social App
-  </h3>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    Social media Android application prototype focused on messaging and engagement workflows.
-  </p>
-  <a href="https://github.com/Imranpasha30/androidapp" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-    <i class="fab fa-github"></i> Source Repository
-  </a>
-</div>
-
-<!-- MERN + GraphQL copy -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-  <h3 style="margin: 0 0 8px 0; color: #fff;">
-    <i class="fas fa-layer-group"></i> MERN Stack (GraphQL)
-  </h3>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    MERN stack experiment integrating GraphQL APIs for schema-first backend iterations.
-  </p>
-  <a href="https://github.com/Imranpasha30/imran---mern-stack-using-graph-ql---Copy" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-    <i class="fab fa-github"></i> Source Repository
-  </a>
-</div>
-
-<!-- Logistics -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-  <h3 style="margin: 0 0 8px 0; color: #fff;">
-    <i class="fas fa-truck"></i> Logistics
-  </h3>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    Early-stage logistics workflow prototype with basic modules scaffolded for iteration.
-  </p>
-  <a href="https://github.com/Imranpasha30/logestics-" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-    <i class="fab fa-github"></i> Source Repository
-  </a>
-</div>
-
-<!-- Travellers Website -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-  <h3 style="margin: 0 0 8px 0; color: #fff;">
-    <i class="fas fa-plane-departure"></i> Travellers Website
-  </h3>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    Frontend-focused travel website scaffold for experimenting with UI/UX flows and content.
-  </p>
-  <a href="https://github.com/Imranpasha30/travellers-website" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-    <i class="fab fa-github"></i> Source Repository
-  </a>
-</div>
-
-<!-- Map OJ -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px; border-left: 4px solid var(--accent-color);">
-  <h3 style="margin: 0 0 8px 0; color: #fff;">
-    <i class="fas fa-map-marked-alt"></i> Map OJ
-  </h3>
-  <p style="margin: 0 0 8px 0; color: #ccc;">
-    Mapping and geospatial playground project for experimenting with coordinates and rendering.
-  </p>
-  <a href="https://github.com/Imranpasha30/map_oj" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">
-    <i class="fab fa-github"></i> Source Repository
-  </a>
-</div>
-
-<!-- APK Workspace -->
-
-
-  </div>
-</div>
-
-<!-- Bottom Dock (Centered) -->
-<div id="dock">
-<div class="dock-section">
-<div class="dock-icon" data-window="file-manager-window" title="File Manager">
-<i class="fas fa-folder"></i>
-</div>
-<div class="dock-icon" data-window="terminal-window" title="Terminal">
-<i class="fas fa-terminal"></i>
-</div>
-<div class="dock-icon" data-window="browser-window" title="Firefox">
-<i class="fab fa-firefox"></i>
-</div>
-<div class="dock-icon" data-window="about-window" title="About Me">
-<i class="fas fa-user"></i>
-</div>
-<div class="dock-icon" data-window="projects-window" title="Projects">
-<i class="fas fa-code"></i>
-</div>
-</div>
-</div>
-</div>
-
-<script src="imran_linux_desktop.js"></script>
+  <script src="imran_linux_desktop.js"></script>
 
 
 </body>
+
 </html>
